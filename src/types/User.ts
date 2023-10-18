@@ -5,3 +5,8 @@ export type User = {
   level: number;
   password: string;
 };
+
+export type TokenPayload = {
+  id: number;
+  username: string;
+};
