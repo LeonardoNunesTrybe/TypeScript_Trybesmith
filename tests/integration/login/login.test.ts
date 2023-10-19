@@ -9,16 +9,7 @@ chai.use(chaiHttp);
 
 describe('POST /login', function () { 
   beforeEach(function () { sinon.restore(); });
-  it('should return 200 when request is ok ', async function () {
-    const requestBody = UserModel.build(userMock.validUser)
-    sinon.stub(UserModel, 'findOne').resolves(requestBody);
-  
-    const response = await chai.request(app).post('/login').send(userMock.validLogin);
-  
-    expect(response.status).to.be.equal(200);
-    expect(response.body).to.have.key('token');
-  })
-  
+    
   it('should return 400 when username is not send ', async function () {
     const requestBody = {
       username: "",
@@ -62,6 +53,16 @@ it('should return 401 when username is invalid ', async function () {
   const response = await chai.request(app).post('/login').send(requestBody);
 
   expect(response.status).to.be.equal(401);
+})
+
+it('should return 200 when request is ok ', async function () {
+  const requestBody = UserModel.build(userMock.validUser)
+  sinon.stub(UserModel, 'findOne').resolves(requestBody);
+
+  const response = await chai.request(app).post('/login').send(userMock.validLogin);
+
+  expect(response.status).to.be.equal(200);
+  expect(response.body).to.have.key('token');
 })
 
 });
